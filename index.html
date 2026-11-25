@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oliveira Barbearia</title>
+  <style>
+    :root {
+      --bg: #070709;
+      --panel: #111116;
+      --panel-elevated: #17171e;
+      --card: #181820;
+      --card-hover: #1f1f29;
+      --card-active: rgba(245, 158, 11, 0.16);
+      --accent: #f59e0b;
+      --accent-bright: #fbbf24;
+      --accent-grad: linear-gradient(135deg, #fbbf24 0%, #f59e0b 55%, #d97706 100%);
+      --ink: #f8fafc;
+      --muted: #94a3b8;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-soft: rgba(255, 255, 255, 0.05);
+      --line-accent: rgba(251, 191, 36, 0.55);
+      --green-bg: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.06));
+      --green-line: rgba(16, 185, 129, 0.35);
+      --green-dot: #10b981;
+      --danger: #ef4444;
+      --shadow-gold: 0 8px 24px -6px rgba(245, 158, 11, 0.22);
+      --shadow-card: 0 10px 28px -12px rgba(0, 0, 0, 0.75);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background:
+        radial-gradient(ellipse 90% 45% at 50% -5%, rgba(245, 158, 11, 0.14), transparent 70%),
+        radial-gradient(circle at 85% 20%, rgba(217, 119, 6, 0.07), transparent 45%),
+        var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      line-height: 1.45;
+      padding: 16px 13px 54px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app {
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 13px 15px;
+      background: linear-gradient(180deg, rgba(26, 26, 34, 0.96), rgba(15, 15, 20, 0.96));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--accent-grad);
+      color: #09090b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.12rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.32);
+    }
+
+    .brand-title {
+      font-size: 0.98rem;
+      font-weight: 850;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #fff;
+    }
+
+    .brand-sub {
+      font-size: 0.73rem;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .btn-painel {
+      background: var(--card);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      padding: 8px 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.18s ease;
+    }
+
+    .btn-painel:hover {
+      border-color: rgba(251, 191, 36, 0.35);
+      background: var(--card-hover);
+    }
+
+    .btn-painel.active {
+      background: rgba(245, 158, 11, 0.18);
+      border-color: var(--line-accent);
+      color: var(--accent-bright);
+    }
+
+    .tabs-box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 7px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      margin-bottom: 11px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .tab-btn {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 10px 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .tab-btn:hover:not(.active) {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .tab-btn.active {
+      background: var(--accent-grad);
+      color: #09090b;
+      box-shadow: var(--shadow-gold);
+    }
+
+    .status-banner {
+      background: var(--green-bg);
+      border: 1px solid var(--green-line);
+      border-radius: 16px;
+      padding: 13px 15px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px -12px rgba(16, 185, 129, 0.35);
+    }
+
+    .status-main {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #6ee7b7;
+    }
+
+    .live-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green-dot);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+      flex-shrink: 0;
+    }
+
+    .live-dot.warn {
+      background: var(--accent-bright);
+      box-shadow: 0 0 10px rgba(251, 191, 36, 0.75);
+    }
+
+    .status-sub {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: #cbd5e1;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+      animation: fadeSlide 0.22s ease;
+    }
+
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .step-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 0 2px;
+    }
+
+    .step-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .step-hint {
+      font-size: 0.77rem;
+      color: var(--muted);
+    }
+
+    .service-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-bottom: 14px;
+    }
+
+    .service-card {
+      width: 100%;
+      text-align: left;
+      background: linear-gradient(180deg, rgba(28, 28, 37, 0.92), rgba(20, 20, 27, 0.96));
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 14px 15px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      box-shadow: var(--shadow-card);
+    }
+
+    .service-card:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .service-card.selected {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(217, 119, 6, 0.08));
+      border-color: var(--line-accent);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .srv-name {
+      font-size: 0.96rem;
+      font-weight: 750;
+      color: #fff;
+    }
+
+    .srv-time {
+      font-size: 0.79rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .srv-right {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .srv-price {
+      font-size: 0.96rem;
+      font-weight: 850;
+      color: var(--accent-bright);
+    }
+
+    .srv-state {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .service-card.selected .srv-state {
+      color: var(--accent-bright);
+      font-weight: 700;
+    }
+
+    .box-card {
+      background: linear-gradient(180deg, rgba(22, 22, 29, 0.96), rgba(15, 15, 20, 0.98));
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 15px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .ticket-card {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(180, 83, 9, 0.08));
+      border: 1px solid var(--line-accent);
+      border-radius: 16px;
+      padding: 15px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-gold);
+    }
+
+    .ticket-num {
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: var(--accent-bright);
+      line-height: 1.1;
+      margin-top: 2px;
+    }
+
+    .cash-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+      margin-bottom: 12px;
+    }
+
+    .cash-box {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 11px 10px;
+      text-align: center;
+    }
+
+    .cash-label {
+      font-size: 0.71rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .cash-val {
+      font-size: 0.94rem;
+      font-weight: 850;
+      color: var(--accent-bright);
+      margin-top: 4px;
+    }
+
+    .cash-sub-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      padding-top: 8px;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 13px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      font-size: 0.93rem;
+      margin-bottom: 11px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--line-accent);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.14);
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 13px 15px;
+      border-radius: 13px;
+      border: none;
+      background: var(--accent-grad);
+      color: #09090b;
+      font-size: 0.94rem;
+      font-weight: 850;
+      cursor: pointer;
+      box-shadow: var(--shadow-gold);
+      transition: transform 0.14s ease, filter 0.14s ease;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.04);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.99);
+    }
+
+    .btn-sm {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      font-size: 0.79rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-sm:hover {
+      background: var(--card-hover);
+    }
+
+    .btn-sm.gold {
+      background: var(--accent-grad);
+      color: #09090b;
+      border-color: transparent;
+      font-weight: 800;
+    }
+
+    .btn-sm.danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: #fca5a5;
+      border-color: rgba(239, 68, 68, 0.35);
+    }
+
+    .actions-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 11px;
+    }
+
+    .list-stack {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .row-item {
+      background: var(--card);
+      border: 1px solid var(--line-soft);
+      border-radius: 13px;
+      padding: 12px 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .row-sub {
+      font-size: 0.79rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .pix-code {
+      margin-top: 9px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(9, 9, 12, 0.85);
+      border: 1px dashed var(--line-accent);
+      color: var(--accent-bright);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.85rem;
+      word-break: break-all;
+      user-select: all;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 80;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 380px;
+      background: var(--panel-elevated);
+      border: 1px solid var(--line-accent);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-grad);
+      color: #09090b;
+      font-weight: 850;
+      font-size: 0.82rem;
+      padding: 10px 17px;
+      border-radius: 999px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      box-shadow: var(--shadow-gold);
+      z-index: 90;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 22px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    footer strong {
+      color: var(--accent-bright);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand-left">
+        <div class="brand-icon">✂</div>
+        <div>
+          <div id="nomeBarbeariaTopo" class="brand-title">Oliveira Barbearia</div>
+          <div class="brand-sub">Atendimento por ordem de chegada</div>
+        </div>
+      </div>
+      <button type="button" id="btnPainel" class="btn-painel">🔒 Painel</button>
+    </header>
+
+    <nav class="tabs-box" aria-label="Navegação">
+      <button type="button" class="tab-btn active" data-view="fila">Entrar na Fila</button>
+      <button type="button" class="tab-btn" data-view="vez">Sua Vez na Fila</button>
+      <button type="button" class="tab-btn" data-view="produtos">Produtos</button>
+      <button type="button" class="tab-btn" data-view="pagamento">Pix &amp; Cartão</button>
+    </nav>
+
+    <div class="status-banner">
+      <div class="status-main">
+        <span id="chairDot" class="live-dot"></span>
+        <span id="chairTitle">CADEIRA LIVRE • CHEGUE E CORTE AGORA</span>
+      </div>
+      <div id="chairSub" class="status-sub">
+        Atendimento por Ordem de Chegada • <strong id="countFilaBanner">0</strong> pessoas na fila
+      </div>
+    </div>
+
+    <!-- ABA 1: ENTRAR NA FILA -->
+    <section id="view-fila" class="view active">
+      <div id="minhaSenhaCard" class="ticket-card" style="display: none;">
+        <div class="row-sub">SUA SENHA NA FILA</div>
+        <div id="ticketNumero" class="ticket-num">#01</div>
+        <div id="ticketInfo" class="row-sub"></div>
+        <div class="actions-row">
+          <button type="button" id="btnPixTicket" class="btn-sm gold">Pagar / Enviar Pix</button>
+          <button type="button" id="btnIrVezTicket" class="btn-sm">Ver minha vez</button>
+        </div>
+      </div>
+
+      <div class="step-head">
+        <span class="step-title">1. SELECIONE OS SERVIÇOS</span>
+        <span class="step-hint">Escolha um ou mais</span>
+      </div>
+
+      <div id="servicosLista" class="service-list"></div>
+
+      <form id="formFila" class="box-card">
+        <label for="nomeCliente">Seu nome</label>
+        <input id="nomeCliente" type="text" placeholder="Ex.: Lucas Oliveira" required />
+
+        <label for="telefoneCliente">Seu número de celular (WhatsApp)</label>
+        <input id="telefoneCliente" type="tel" inputmode="tel" placeholder="Ex.: (75) 99999-9999" required />
+
+        <button type="submit" class="btn-primary">
+          Gerar senha e entrar • <span id="resumoTotal">R$ 23,00</span>
+        </button>
+      </form>
+
+      <div class="box-card">
+        <div class="step-head" style="margin-bottom: 8px;">
+          <span class="step-title">FILA ATUAL (<span id="qtdFilaLista">0</span>)</span>
+        </div>
+        <ul id="filaLista" class="list-stack"></ul>
+      </div>
+    </section>
+
+    <!-- ABA 2: SUA VEZ NA FILA -->
+    <section id="view-vez" class="view">
+      <div class="box-card">
+        <div class="step-title" style="margin-bottom: 6px;">ATENDIMENTO ATUAL</div>
+        <div id="atualNome" style="font-size: 1.08rem; font-weight: 850; color: var(--accent-bright);">
+          Cadeira livre no momento
+        </div>
+        <div id="atualDetalhes" class="row-sub">Nenhum cliente em atendimento</div>
+      </div>
+
+      <div class="box-card">
+        <div class="step-title" style="margin-bottom: 4px;">SUA SENHA E POSIÇÃO</div>
+        <div id="minhaPosicao" class="row-sub">
+          Entre na fila na aba "Entrar na Fila" para gerar sua senha.
+        </div>
+        <div class="actions-row">
+          <button type="button" id="btnPixNaVez" class="btn-sm gold">Pagar / Enviar Pix</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABA 3: PRODUTOS -->
+    <section id="view-produtos" class="view">
+      <div class="step-head">
+        <span class="step-title">PRODUTOS DA BARBEARIA</span>
+        <span class="step-hint">Reserve para retirar</span>
+      </div>
+
+      <div id="produtosGrid" class="service-list"></div>
+
+      <div class="box-card">
+        <div class="step-head" style="margin-bottom: 8px;">
+          <span class="step-title">RESERVAS (<span id="qtdReservas">0</span>)</span>
+        </div>
+        <ul id="reservasLista" class="list-stack"></ul>
+      </div>
+    </section>
+
+    <!-- ABA 4: PIX & CARTÃO -->
+    <section id="view-pagamento" class="view">
+      <div class="box-card">
+        <div class="step-title">PAGAMENTO VIA PIX</div>
+        <div id="pixValorResumo" class="row-sub" style="color: var(--accent-bright); font-weight: 750;"></div>
+        <div class="row-sub">Copie a chave Pix abaixo, faça o pagamento e envie o comprovante pelo WhatsApp:</div>
+        <div id="pixValor" class="pix-code">oliveirabarbearia.pix@exemplo.com</div>
+
+        <div class="actions-row">
+          <button type="button" id="btnCopiarPix" class="btn-sm">Copiar chave Pix</button>
+          <button type="button" id="btnEnviarComprovante" class="btn-sm gold">Enviar comprovante no WhatsApp</button>
+        </div>
+        <div id="statusPagamentoPix" class="row-sub" style="margin-top: 9px;"></div>
+      </div>
+
+      <div class="box-card">
+        <div class="step-title">CARTÃO DE CRÉDITO E DÉBITO</div>
+        <div class="row-sub">
+          Débito, crédito à vista e parcelado presencialmente na barbearia.
+        </div>
+      </div>
+    </section>
+
+    <!-- PAINEL PROTEGIDO DO BARBEIRO -->
+    <section id="view-painel" class="view">
+      <div class="box-card">
+        <div class="step-title" style="margin-bottom: 4px;">CONEXÃO DO SISTEMA</div>
+        <div id="painelFirebaseStatus" class="row-sub" style="color: var(--accent-bright); font-weight: 700;">
+          Conectando ao Firebase...
+        </div>
+      </div>
+
+      <div class="box-card">
+        <div class="step-head" style="margin-bottom: 4px;">
+          <span class="step-title">CAIXA DA BARBEARIA</span>
+          <span class="step-hint">Total geral + dinheiro físico</span>
+        </div>
+        <div class="cash-grid">
+          <div class="cash-box">
+            <div class="cash-label">Dia</div>
+            <div id="caixaDia" class="cash-val">R$ 0,00</div>
+          </div>
+          <div class="cash-box">
+            <div class="cash-label">Semana</div>
+            <div id="caixaSemana" class="cash-val">R$ 0,00</div>
+          </div>
+          <div class="cash-box">
+            <div class="cash-label">Mês</div>
+            <div id="caixaMes" class="cash-val">R$ 0,00</div>
+          </div>
+        </div>
+        <div class="cash-sub-row">
+          <span>Dinheiro físico hoje: <strong id="dinheiroHoje" style="color: var(--accent-bright);">R$ 0,00</strong></span>
+          <span>Dinheiro físico (30d): <strong id="dinheiroMes" style="color: var(--accent-bright);">R$ 0,00</strong></span>
+        </div>
+        <div class="actions-row">
+          <button type="button" id="btnLimparCaixa" class="btn-sm danger">Limpar caixa</button>
+        </div>
+      </div>
+
+      <form id="formDinheiroFisico" class="box-card">
+        <div class="step-title" style="margin-bottom: 10px;">ADICIONAR DINHEIRO FÍSICO</div>
+
+        <label for="valorDinheiroFisico">Valor recebido em dinheiro (R$)</label>
+        <input id="valorDinheiroFisico" type="number" step="0.01" min="0.01" placeholder="Ex.: 25.00" required />
+
+        <label for="descDinheiroFisico">Descrição (opcional)</label>
+        <input id="descDinheiroFisico" type="text" placeholder="Ex.: Corte avulso ou produto em espécie" />
+
+        <button type="submit" class="btn-primary">Adicionar dinheiro ao caixa</button>
+      </form>
+
+      <div class="box-card">
+        <div class="step-title" style="margin-bottom: 6px;">CONTROLE DA FILA</div>
+        <div id="painelAtualResumo" class="row-sub">Nenhum cliente na cadeira</div>
+        <div class="actions-row">
+          <button type="button" id="btnChamar" class="btn-sm gold">Chamar próxima senha</button>
+          <button type="button" id="btnFinalizar" class="btn-sm">Concluir &amp; liberar</button>
+          <button type="button" id="btnLimparFila" class="btn-sm danger">Limpar fila</button>
+          <button type="button" id="btnSairPainel" class="btn-sm danger">Bloquear painel</button>
+        </div>
+      </div>
+
+      <div class="box-card">
+        <div class="step-title" style="margin-bottom: 8px;">SENHAS NA FILA</div>
+        <ul id="painelFilaLista" class="list-stack"></ul>
+      </div>
+
+      <form id="formGerenciarProduto" class="box-card">
+        <div class="step-title" style="margin-bottom: 10px;">GERENCIAR PRODUTOS E VALORES</div>
+
+        <label for="nomeProdutoInput">Nome do produto</label>
+        <input id="nomeProdutoInput" type="text" placeholder="Ex.: Pomada Matte" required />
+
+        <label for="precoProdutoInput">Valor (R$)</label>
+        <input id="precoProdutoInput" type="number" step="0.01" min="0.01" placeholder="Ex.: 28.00" required />
+
+        <button type="submit" class="btn-primary">Adicionar produto</button>
+
+        <div class="step-head" style="margin-top: 14px; margin-bottom: 8px;">
+          <span class="step-title">PRODUTOS CADASTRADOS</span>
+        </div>
+        <ul id="painelProdutosLista" class="list-stack"></ul>
+      </form>
+
+      <form id="formConfigBarbeiro" class="box-card">
+        <div class="step-title" style="margin-bottom: 10px;">PERFIL DO BARBEIRO, PIX E SENHA</div>
+
+        <label for="cfgNomeBarbearia">Nome da barbearia</label>
+        <input id="cfgNomeBarbearia" type="text" required />
+
+        <label for="cfgWhatsapp">WhatsApp da barbearia (com DDD, só números)</label>
+        <input id="cfgWhatsapp" type="tel" inputmode="numeric" placeholder="Ex.: 75999999999" required />
+
+        <label for="cfgChavePix">Chave Pix do barbeiro</label>
+        <input id="cfgChavePix" type="text" required />
+
+        <label for="cfgSenhaPainel">Nova senha do painel</label>
+        <input id="cfgSenhaPainel" type="password" required />
+
+        <button type="submit" class="btn-primary">Salvar alterações do perfil</button>
+      </form>
+    </section>
+
+    <footer>
+      Oliveira Barbearia • Desenvolvido por <strong>@THtec</strong>
+    </footer>
+  </div>
+
+  <!-- MODAL DE SENHA DO PAINEL -->
+  <div id="modalSenha" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="tituloModalSenha">
+    <div class="modal-card">
+      <div id="tituloModalSenha" class="step-title" style="margin-bottom: 6px;">ACESSO AO PAINEL</div>
+      <div class="row-sub" style="margin-bottom: 10px;">Digite a senha</div>
+      <form id="formSenhaPainel">
+        <label for="inputSenhaPainel">Senha</label>
+        <input id="inputSenhaPainel" type="password" placeholder="Digite a senha" required />
+        <div class="actions-row" style="margin-top: 4px;">
+          <button type="submit" class="btn-sm gold">Entrar no painel</button>
+          <button type="button" id="btnCancelarSenha" class="btn-sm">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDgajFQDZoRAPDxCmT_adLofNUPpuuibYA",
+      authDomain: "oliveira-barbeariaa.firebaseapp.com",
+      databaseURL: "https://oliveira-barbeariaa-default-rtdb.firebaseio.com",
+      projectId: "oliveira-barbeariaa",
+      storageBucket: "oliveira-barbeariaa.firebasestorage.app",
+      messagingSenderId: "162700876284",
+      appId: "1:162700876284:web:92bff759c6c32b650e3a79"
+    };
+
+    const SERVICOS = [
+      { id: "degrade", nome: "Degradê", minutos: 30, preco: 23 },
+      { id: "social_barba", nome: "Social + barba", minutos: 40, preco: 25 },
+      { id: "degrade_barba", nome: "Degradê + barba", minutos: 55, preco: 30 },
+      { id: "acabamento", nome: "Acabamento/pezinho", minutos: 8, preco: 7 },
+      { id: "sobrancelha", nome: "Sobrancelha", minutos: 5, preco: 7 }
+    ];
+
+    const PRODUTOS_PADRAO = [
+      { id: "pomada", nome: "Pomada Modeladora", preco: 28 },
+      { id: "oleo", nome: "Óleo para Barba", preco: 25 },
+      { id: "balm", nome: "Balm Pós-Barba", preco: 30 }
+    ];
+
+    const STORAGE_KEY = "oliveira_barbearia_rtdb_v11";
+    const CLIENT_KEY = "oliveira_barbearia_client_v11";
+
+    let meuId = localStorage.getItem(CLIENT_KEY);
+    if (!meuId) {
+      meuId = "c_" + Date.now() + "_" + Math.random().toString(36).slice(2, 7);
+      localStorage.setItem(CLIENT_KEY, meuId);
+    }
+
+    let selecionados = ["degrade"];
+    let painelDesbloqueado = false;
+    let estado = {
+      fila: [],
+      atual: null,
+      reservas: [],
+      lancamentos: [],
+      produtos: PRODUTOS_PADRAO.slice(),
+      ultimoNumero: 0,
+      config: {
+        nomeBarbearia: "Oliveira Barbearia",
+        whatsapp: "75999359636",
+        chavePix: "oliveirabarbearia.pix@exemplo.com",
+        senhaPainel: "1234"
+      }
+    };
+
+    function toast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(window.__t);
+      window.__t = setTimeout(() => el.classList.remove("show"), 2400);
+    }
+
+    function moeda(v) {
+      return "R$ " + Number(v || 0).toFixed(2).replace(".", ",");
+    }
+
+    function formatarSenha(num) {
+      return "#" + String(Number(num || 0)).padStart(2, "0");
+    }
+
+    function normalizar(raw) {
+      const d = raw || {};
+      const fila = Array.isArray(d.fila) ? d.fila : d.fila && typeof d.fila === "object" ? Object.values(d.fila) : [];
+      const reservas = Array.isArray(d.reservas) ? d.reservas : d.reservas && typeof d.reservas === "object" ? Object.values(d.reservas) : [];
+      const lancamentos = Array.isArray(d.lancamentos) ? d.lancamentos : d.lancamentos && typeof d.lancamentos === "object" ? Object.values(d.lancamentos) : [];
+      const produtosRaw = Array.isArray(d.produtos) ? d.produtos : d.produtos && typeof d.produtos === "object" ? Object.values(d.produtos) : PRODUTOS_PADRAO;
+      const produtos = produtosRaw.map((p, idx) => ({
+        id: String(p.id || "prod_" + idx),
+        nome: String(p.nome || "Produto"),
+        preco: Number(p.preco || 0)
+      }));
+      const cfg = d.config || {};
+      const maiorSenha = fila.reduce((m, x) => Math.max(m, Number(x.senha || 0)), Number(d.ultimoNumero || 0));
+
+      return {
+        fila,
+        atual: d.atual || null,
+        reservas,
+        lancamentos,
+        produtos,
+        ultimoNumero: maiorSenha,
+        config: {
+          nomeBarbearia: cfg.nomeBarbearia || d.nomeBarbearia || "Oliveira Barbearia",
+          whatsapp: String(cfg.whatsapp || d.whatsapp || "75999359636").replace(/\D/g, ""),
+          chavePix: cfg.chavePix || d.chavePix || "oliveirabarbearia.pix@exemplo.com",
+          senhaPainel: String(cfg.senhaPainel || d.senhaPainel || "1234")
+        }
+      };
+    }
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const refLoja = db.ref("oliveiraBarbearia");
+    const refOnline = db.ref(".info/connected");
+
+    refOnline.on("value", (snap) => {
+      const ok = snap.val() === true;
+      const textoStatus = ok
+        ? "Conectado ao Firebase (ao vivo)"
+        : "Modo local / sincronizando...";
+      const elPainel = document.getElementById("painelFirebaseStatus");
+      if (elPainel) elPainel.textContent = textoStatus;
+    });
+
+    function salvar(novo) {
+      estado = normalizar(novo);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(estado));
+      render();
+      refLoja.set(estado).catch(() => {});
+    }
+
+    function abrirAba(target) {
+      const painelEstavaAberto = document.getElementById("view-painel").classList.contains("active");
+      if (painelEstavaAberto && target !== "painel") {
+        painelDesbloqueado = false;
+      }
+
+      if (target === "painel" && !painelDesbloqueado) {
+        document.getElementById("inputSenhaPainel").value = "";
+        document.getElementById("modalSenha").classList.add("open");
+        setTimeout(() => document.getElementById("inputSenhaPainel").focus(), 50);
+        return;
+      }
+
+      document.querySelectorAll(".tab-btn").forEach((b) => {
+        b.classList.toggle("active", b.dataset.view === target);
+      });
+      document.querySelectorAll(".view").forEach((v) => {
+        v.classList.toggle("active", v.id === "view-" + target);
+      });
+      document.getElementById("btnPainel").classList.toggle("active", target === "painel");
+    }
+
+    function alternarServico(id) {
+      if (selecionados.includes(id)) {
+        if (selecionados.length > 1) {
+          selecionados = selecionados.filter((x) => x !== id);
+        }
+      } else {
+        selecionados.push(id);
+      }
+      renderServicos();
+      renderResumo();
+    }
+
+    function renderServicos() {
+      const wrap = document.getElementById("servicosLista");
+      wrap.innerHTML = SERVICOS.map((s) => {
+        const ativa = selecionados.includes(s.id);
+        return `
+          <button type="button" class="service-card ${ativa ? "selected" : ""}" onclick="alternarServico('${s.id}')">
+            <div>
+              <div class="srv-name">${s.nome}</div>
+              <div class="srv-time">${s.minutos} min</div>
+            </div>
+            <div class="srv-right">
+              <div class="srv-price">${moeda(s.preco)}</div>
+              <div class="srv-state">${ativa ? "Selecionado ✓" : "Selecionar"}</div>
+            </div>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderResumo() {
+      const total = SERVICOS
+        .filter((s) => selecionados.includes(s.id))
+        .reduce((acc, s) => acc + s.preco, 0);
+      document.getElementById("resumoTotal").textContent = moeda(total);
+    }
+
+    function renderBanner() {
+      document.getElementById("nomeBarbeariaTopo").textContent = estado.config.nomeBarbearia;
+      document.title = estado.config.nomeBarbearia;
+      const qtd = estado.fila.length;
+      document.getElementById("countFilaBanner").textContent = qtd;
+      const dot = document.getElementById("chairDot");
+      const title = document.getElementById("chairTitle");
+      if (estado.atual) {
+        dot.className = "live-dot warn";
+        title.textContent = `EM ATENDIMENTO • ${formatarSenha(estado.atual.senha)} ${estado.atual.nome.toUpperCase()}`;
+      } else {
+        dot.className = "live-dot";
+        title.textContent = "CADEIRA LIVRE • CHEGUE E CORTE AGORA";
+      }
+    }
+
+    function renderMeuTicket() {
+      const card = document.getElementById("minhaSenhaCard");
+      const idx = estado.fila.findIndex((x) => x.clientId === meuId);
+      const emAtendimento = estado.atual && estado.atual.clientId === meuId;
+
+      if (emAtendimento) {
+        card.style.display = "block";
+        document.getElementById("ticketNumero").textContent = formatarSenha(estado.atual.senha);
+        document.getElementById("ticketInfo").textContent =
+          `${estado.atual.nome} • É a sua vez na cadeira! Total: ${moeda(estado.atual.total)}`;
+        return;
+      }
+
+      if (idx >= 0) {
+        const meuItem = estado.fila[idx];
+        card.style.display = "block";
+        document.getElementById("ticketNumero").textContent = formatarSenha(meuItem.senha);
+        document.getElementById("ticketInfo").textContent =
+          `${meuItem.nome} • Posição #${idx + 1} (${idx === 0 ? "próximo da fila" : idx + " na frente"}) • ${moeda(meuItem.total)}`;
+        return;
+      }
+
+      card.style.display = "none";
+    }
+
+    function renderFila() {
+      document.getElementById("qtdFilaLista").textContent = estado.fila.length;
+      const ul = document.getElementById("filaLista");
+      const painelUl = document.getElementById("painelFilaLista");
+
+      if (!estado.fila.length) {
+        ul.innerHTML = '<li class="row-item"><span class="row-sub">Ninguém aguardando na fila.</span></li>';
+        painelUl.innerHTML = '<li class="row-item"><span class="row-sub">Nenhuma senha na fila.</span></li>';
+        return;
+      }
+
+      ul.innerHTML = estado.fila.map((item, i) => `
+        <li class="row-item">
+          <div>
+            <strong>Senha ${formatarSenha(item.senha)} • ${item.nome}</strong>
+            ${item.clientId === meuId ? '<span class="row-sub">(Você • Posição #' + (i + 1) + ')</span>' : ""}
+            <div class="row-sub">${item.servicosTexto} • ${moeda(item.total)}</div>
+          </div>
+          <button type="button" class="btn-sm danger" onclick="sairFila('${item.id}')">Sair</button>
+        </li>
+      `).join("");
+
+      painelUl.innerHTML = estado.fila.map((item, i) => `
+        <li class="row-item">
+          <div>
+            <strong>#${i + 1} • Senha ${formatarSenha(item.senha)} — ${item.nome}</strong>
+            <div class="row-sub">Tel: ${item.telefone || "-"} • ${item.servicosTexto} • ${moeda(item.total)} ${item.comprovanteEnviado ? "• Comprovante enviado ✓" : ""}</div>
+          </div>
+          <button type="button" class="btn-sm danger" onclick="sairFila('${item.id}')">Remover</button>
+        </li>
+      `).join("");
+    }
+
+    function renderVez() {
+      const atualNome = document.getElementById("atualNome");
+      const atualDet = document.getElementById("atualDetalhes");
+      const painelResumo = document.getElementById("painelAtualResumo");
+
+      if (estado.atual) {
+        const label = `Senha ${formatarSenha(estado.atual.senha)} — ${estado.atual.nome}`;
+        atualNome.textContent = label;
+        atualDet.textContent = `${estado.atual.servicosTexto} (${moeda(estado.atual.total)})`;
+        painelResumo.textContent = `${label} • Tel: ${estado.atual.telefone || "-"} • ${estado.atual.servicosTexto} • ${moeda(estado.atual.total)}`;
+      } else {
+        atualNome.textContent = "Cadeira livre no momento";
+        atualDet.textContent = "Nenhum cliente em atendimento";
+        painelResumo.textContent = "Nenhum cliente na cadeira";
+      }
+
+      const posEl = document.getElementById("minhaPosicao");
+      if (estado.atual && estado.atual.clientId === meuId) {
+        posEl.textContent = `Senha ${formatarSenha(estado.atual.senha)}: é a sua vez agora! Dirija-se à cadeira.`;
+        return;
+      }
+      const idx = estado.fila.findIndex((x) => x.clientId === meuId);
+      if (idx >= 0) {
+        const item = estado.fila[idx];
+        posEl.textContent = `Sua senha é ${formatarSenha(item.senha)} • Posição #${idx + 1} (${idx === 0 ? "próximo a entrar" : idx + " na sua frente"}).`;
+      } else {
+        posEl.textContent = 'Você não está na fila no momento. Toque em "Entrar na Fila" para gerar sua senha.';
+      }
+    }
+
+    function renderCaixa() {
+      const agora = Date.now();
+      const umDia = 24 * 60 * 60 * 1000;
+      const seteDias = 7 * umDia;
+      const trintaDias = 30 * umDia;
+
+      let dia = 0;
+      let semana = 0;
+      let mes = 0;
+      let dinheiroHoje = 0;
+      let dinheiroMes = 0;
+
+      estado.lancamentos.forEach((l) => {
+        const valor = Number(l.valor || 0);
+        const ts = Number(l.timestamp || 0);
+        const diff = agora - ts;
+        const ehDinheiro = l.origem === "dinheiro_fisico" || l.metodo === "dinheiro";
+
+        if (diff <= trintaDias) {
+          mes += valor;
+          if (ehDinheiro) dinheiroMes += valor;
+        }
+        if (diff <= seteDias) {
+          semana += valor;
+        }
+        if (diff <= umDia) {
+          dia += valor;
+          if (ehDinheiro) dinheiroHoje += valor;
+        }
+      });
+
+      document.getElementById("caixaDia").textContent = moeda(dia);
+      document.getElementById("caixaSemana").textContent = moeda(semana);
+      document.getElementById("caixaMes").textContent = moeda(mes);
+      document.getElementById("dinheiroHoje").textContent = moeda(dinheiroHoje);
+      document.getElementById("dinheiroMes").textContent = moeda(dinheiroMes);
+    }
+
+    function renderConfigForm() {
+      const ativo = document.activeElement;
+      const idsForm = ["cfgNomeBarbearia", "cfgWhatsapp", "cfgChavePix", "cfgSenhaPainel"];
+      if (ativo && idsForm.includes(ativo.id)) return;
+
+      document.getElementById("cfgNomeBarbearia").value = estado.config.nomeBarbearia;
+      document.getElementById("cfgWhatsapp").value = estado.config.whatsapp;
+      document.getElementById("cfgChavePix").value = estado.config.chavePix;
+      document.getElementById("cfgSenhaPainel").value = estado.config.senhaPainel;
+    }
+
+    function renderProdutos() {
+      const grid = document.getElementById("produtosGrid");
+      if (!estado.produtos.length) {
+        grid.innerHTML = '<div class="box-card"><span class="row-sub">Nenhum produto cadastrado no momento.</span></div>';
+      } else {
+        grid.innerHTML = estado.produtos.map((p) => `
+          <div class="service-card">
+            <div>
+              <div class="srv-name">${p.nome}</div>
+              <div class="srv-price">${moeda(p.preco)}</div>
+            </div>
+            <button type="button" class="btn-sm gold" onclick="reservar('${p.id}')">Reservar</button>
+          </div>
+        `).join("");
+      }
+
+      const ativo = document.activeElement;
+      const digitandoProduto = ativo && (ativo.id === "nomeProdutoInput" || ativo.id === "precoProdutoInput" || ativo.dataset.editPreco === "true");
+      if (!digitandoProduto) {
+        const painelLista = document.getElementById("painelProdutosLista");
+        if (!estado.produtos.length) {
+          painelLista.innerHTML = '<li class="row-item"><span class="row-sub">Nenhum produto cadastrado.</span></li>';
+        } else {
+          painelLista.innerHTML = estado.produtos.map((p) => `
+            <li class="row-item" style="flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 150px;">
+                <strong>${p.nome}</strong>
+                <div class="row-sub">Atual: ${moeda(p.preco)}</div>
+              </div>
+              <div class="actions-row" style="margin-top: 0;">
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0.01"
+                  data-edit-preco="true"
+                  id="precoEdit_${p.id}"
+                  value="${Number(p.preco || 0).toFixed(2)}"
+                  style="width: 92px; margin-bottom: 0; padding: 7px 9px; font-size: 0.82rem;"
+                />
+                <button type="button" class="btn-sm gold" onclick="atualizarPrecoProduto('${p.id}')">Salvar valor</button>
+                <button type="button" class="btn-sm danger" onclick="removerProduto('${p.id}')">Excluir</button>
+              </div>
+            </li>
+          `).join("");
+        }
+      }
+
+      document.getElementById("qtdReservas").textContent = estado.reservas.length;
+      const ul = document.getElementById("reservasLista");
+      if (!estado.reservas.length) {
+        ul.innerHTML = '<li class="row-item"><span class="row-sub">Nenhuma reserva feita.</span></li>';
+        return;
+      }
+      ul.innerHTML = estado.reservas.map((r) => `
+        <li class="row-item">
+          <div>
+            <strong>${r.produto}</strong>
+            <div class="row-sub">${moeda(r.preco)} • ${r.cliente}</div>
+          </div>
+          <button type="button" class="btn-sm" onclick="concluirReserva('${r.id}')">Concluir</button>
+        </li>
+      `).join("");
+    }
+
+    function obterContextoCliente() {
+      const naFila = estado.fila.find((x) => x.clientId === meuId);
+      if (naFila) return naFila;
+      if (estado.atual && estado.atual.clientId === meuId) return estado.atual;
+      return null;
+    }
+
+    function renderPagamento() {
+      document.getElementById("pixValor").textContent = estado.config.chavePix;
+      const cli = obterContextoCliente();
+      const totalSelecionado = SERVICOS
+        .filter((s) => selecionados.includes(s.id))
+        .reduce((acc, s) => acc + s.preco, 0);
+      const valorPagar = cli ? cli.total : totalSelecionado;
+      document.getElementById("pixValorResumo").textContent = `Valor para pagamento: ${moeda(valorPagar)}`;
+      document.getElementById("statusPagamentoPix").textContent = cli && cli.comprovanteEnviado
+        ? `Comprovante enviado para a senha ${formatarSenha(cli.senha)}.`
+        : "Após copiar a chave Pix e pagar, toque em 'Enviar comprovante no WhatsApp'.";
+    }
+
+    function render() {
+      renderServicos();
+      renderResumo();
+      renderBanner();
+      renderMeuTicket();
+      renderFila();
+      renderVez();
+      renderCaixa();
+      renderProdutos();
+      renderPagamento();
+      renderConfigForm();
+    }
+
+    window.alternarServico = alternarServico;
+
+    window.sairFila = function (id) {
+      salvar({ ...estado, fila: estado.fila.filter((x) => x.id !== id) });
+      toast("Removido da fila.");
+    };
+
+    window.reservar = function (id) {
+      const p = estado.produtos.find((x) => x.id === id);
+      if (!p) return;
+      const nome = document.getElementById("nomeCliente").value.trim() || "Cliente";
+      const nova = {
+        id: "r_" + Date.now(),
+        produto: p.nome,
+        preco: p.preco,
+        cliente: nome,
+        timestamp: Date.now()
+      };
+      salvar({ ...estado, reservas: [...estado.reservas, nova] });
+      toast(`${p.nome} reservado!`);
+    };
+
+    window.concluirReserva = function (id) {
+      const alvo = estado.reservas.find((x) => x.id === id);
+      const novosLancamentos = alvo
+        ? [...estado.lancamentos, { id: "l_" + Date.now(), valor: alvo.preco, timestamp: Date.now(), origem: "produto", metodo: "reserva" }]
+        : estado.lancamentos;
+      salvar({
+        ...estado,
+        reservas: estado.reservas.filter((x) => x.id !== id),
+        lancamentos: novosLancamentos
+      });
+      toast("Reserva concluída e lançada no caixa!");
+    };
+
+    document.getElementById("formGerenciarProduto").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nome = document.getElementById("nomeProdutoInput").value.trim();
+      const rawPreco = String(document.getElementById("precoProdutoInput").value || "").replace(",", ".");
+      const preco = Number(rawPreco);
+
+      if (!nome || !Number.isFinite(preco) || preco <= 0) {
+        toast("Informe o nome e um valor válido.");
+        return;
+      }
+
+      const novoProduto = {
+        id: "prod_" + Date.now() + "_" + Math.random().toString(36).slice(2, 5),
+        nome,
+        preco
+      };
+
+      salvar({
+        ...estado,
+        produtos: [...estado.produtos, novoProduto]
+      });
+
+      document.getElementById("nomeProdutoInput").value = "";
+      document.getElementById("precoProdutoInput").value = "";
+      toast(`${nome} adicionado!`);
+    });
+
+    window.atualizarPrecoProduto = function (id) {
+      const input = document.getElementById("precoEdit_" + id);
+      if (!input) return;
+      const novoPreco = Number(String(input.value || "").replace(",", "."));
+      if (!Number.isFinite(novoPreco) || novoPreco <= 0) {
+        toast("Digite um valor válido.");
+        return;
+      }
+
+      const produtosAtualizados = estado.produtos.map((p) => (p.id === id ? { ...p, preco: novoPreco } : p));
+      salvar({ ...estado, produtos: produtosAtualizados });
+      toast("Valor do produto atualizado!");
+    };
+
+    window.removerProduto = function (id) {
+      salvar({
+        ...estado,
+        produtos: estado.produtos.filter((p) => p.id !== id)
+      });
+      toast("Produto removido!");
+    };
+
+    document.getElementById("formDinheiroFisico").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const rawValor = String(document.getElementById("valorDinheiroFisico").value || "").replace(",", ".");
+      const valor = Number(rawValor);
+      const descricao = document.getElementById("descDinheiroFisico").value.trim() || "Dinheiro físico";
+
+      if (!Number.isFinite(valor) || valor <= 0) {
+        toast("Digite um valor válido em dinheiro.");
+        return;
+      }
+
+      const novoLancamento = {
+        id: "l_" + Date.now(),
+        valor,
+        descricao,
+        timestamp: Date.now(),
+        origem: "dinheiro_fisico",
+        metodo: "dinheiro"
+      };
+
+      salvar({
+        ...estado,
+        lancamentos: [...estado.lancamentos, novoLancamento]
+      });
+
+      document.getElementById("valorDinheiroFisico").value = "";
+      document.getElementById("descDinheiroFisico").value = "";
+      toast(`Adicionado ${moeda(valor)} em dinheiro ao caixa!`);
+    });
+
+    document.getElementById("btnLimparFila").addEventListener("click", () => {
+      if (!estado.fila.length && !estado.atual) {
+        toast("A fila já está vazia.");
+        return;
+      }
+      if (!confirm("Deseja realmente limpar toda a fila atual?")) return;
+      salvar({ ...estado, fila: [], atual: null });
+      toast("Fila limpa!");
+    });
+
+    document.getElementById("btnLimparCaixa").addEventListener("click", () => {
+      if (!estado.lancamentos.length) {
+        toast("O caixa já está zerado.");
+        return;
+      }
+      if (!confirm("Deseja realmente limpar todo o histórico do caixa?")) return;
+      salvar({ ...estado, lancamentos: [] });
+      toast("Caixa limpo!");
+    });
+
+    document.getElementById("formFila").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nome = document.getElementById("nomeCliente").value.trim();
+      const telefone = document.getElementById("telefoneCliente").value.trim();
+      if (!nome || !telefone) return;
+
+      const escolhidos = SERVICOS.filter((s) => selecionados.includes(s.id));
+      const total = escolhidos.reduce((acc, s) => acc + s.preco, 0);
+      const servicosTexto = escolhidos.map((s) => s.nome).join(" + ");
+      const proximaSenha = Number(estado.ultimoNumero || 0) + 1;
+
+      const item = {
+        id: "f_" + Date.now(),
+        senha: proximaSenha,
+        clientId: meuId,
+        nome,
+        telefone,
+        servicosTexto,
+        total,
+        comprovanteEnviado: false,
+        timestamp: Date.now()
+      };
+
+      salvar({
+        ...estado,
+        ultimoNumero: proximaSenha,
+        fila: [...estado.fila, item]
+      });
+
+      document.getElementById("nomeCliente").value = "";
+      document.getElementById("telefoneCliente").value = "";
+      toast(`Senha ${formatarSenha(proximaSenha)} gerada!`);
+    });
+
+    document.getElementById("btnPainel").addEventListener("click", () => {
+      const ativo = document.getElementById("view-painel").classList.contains("active");
+      if (ativo) {
+        painelDesbloqueado = false;
+        abrirAba("fila");
+        toast("Painel bloqueado.");
+      } else {
+        abrirAba("painel");
+      }
+    });
+
+    document.getElementById("formSenhaPainel").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const digitada = document.getElementById("inputSenhaPainel").value.trim();
+      if (digitada !== estado.config.senhaPainel) {
+        toast("Senha incorreta!");
+        return;
+      }
+      painelDesbloqueado = true;
+      document.getElementById("modalSenha").classList.remove("open");
+      abrirAba("painel");
+      toast("Painel desbloqueado!");
+    });
+
+    document.getElementById("btnCancelarSenha").addEventListener("click", () => {
+      document.getElementById("modalSenha").classList.remove("open");
+    });
+
+    document.getElementById("btnSairPainel").addEventListener("click", () => {
+      painelDesbloqueado = false;
+      abrirAba("fila");
+      toast("Painel bloqueado.");
+    });
+
+    document.getElementById("btnChamar").addEventListener("click", () => {
+      if (!estado.fila.length) {
+        toast("Fila vazia.");
+        return;
+      }
+      const [prox, ...resto] = estado.fila;
+      salvar({ ...estado, atual: prox, fila: resto });
+      toast(`Chamando senha ${formatarSenha(prox.senha)} (${prox.nome})!`);
+    });
+
+    document.getElementById("btnFinalizar").addEventListener("click", () => {
+      if (!estado.atual) {
+        toast("Nenhum cliente na cadeira.");
+        return;
+      }
+      const lancamento = {
+        id: "l_" + Date.now(),
+        valor: Number(estado.atual.total || 0),
+        timestamp: Date.now(),
+        origem: "atendimento",
+        metodo: "atendimento"
+      };
+      salvar({
+        ...estado,
+        atual: null,
+        lancamentos: [...estado.lancamentos, lancamento]
+      });
+      toast("Atendimento concluído e registrado no caixa!");
+    });
+
+    document.getElementById("formConfigBarbeiro").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nomeBarbearia = document.getElementById("cfgNomeBarbearia").value.trim() || "Oliveira Barbearia";
+      const whatsapp = document.getElementById("cfgWhatsapp").value.replace(/\D/g, "");
+      const chavePix = document.getElementById("cfgChavePix").value.trim();
+      const senhaPainel = document.getElementById("cfgSenhaPainel").value.trim();
+
+      if (!whatsapp || !chavePix || !senhaPainel) {
+        toast("Preencha WhatsApp, Pix e senha.");
+        return;
+      }
+
+      salvar({
+        ...estado,
+        config: { nomeBarbearia, whatsapp, chavePix, senhaPainel }
+      });
+      toast("Perfil, Pix e senha salvos!");
+    });
+
+    function irParaPix() {
+      abrirAba("pagamento");
+      renderPagamento();
+    }
+
+    document.getElementById("btnPixTicket").addEventListener("click", irParaPix);
+    document.getElementById("btnPixNaVez").addEventListener("click", irParaPix);
+    document.getElementById("btnIrVezTicket").addEventListener("click", () => abrirAba("vez"));
+
+    document.getElementById("btnCopiarPix").addEventListener("click", () => {
+      const chave = estado.config.chavePix;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(chave).then(() => toast("Chave Pix copiada!"));
+      } else {
+        toast("Pix: " + chave);
+      }
+    });
+
+    document.getElementById("btnEnviarComprovante").addEventListener("click", () => {
+      const cli = obterContextoCliente();
+      const escolhidos = SERVICOS.filter((s) => selecionados.includes(s.id));
+      const totalSel = escolhidos.reduce((acc, s) => acc + s.preco, 0);
+      const servicosSel = escolhidos.map((s) => s.nome).join(" + ");
+
+      const senhaTxt = cli ? formatarSenha(cli.senha) : "Sem senha";
+      const nomeCli = cli ? cli.nome : (document.getElementById("nomeCliente").value.trim() || "Cliente");
+      const servTxt = cli ? cli.servicosTexto : servicosSel;
+      const valTxt = moeda(cli ? cli.total : totalSel);
+
+      const novaFila = estado.fila.map((x) => (x.clientId === meuId ? { ...x, comprovanteEnviado: true } : x));
+      const novoAtual = estado.atual && estado.atual.clientId === meuId
+        ? { ...estado.atual, comprovanteEnviado: true }
+        : estado.atual;
+
+      salvar({ ...estado, fila: novaFila, atual: novoAtual });
+
+      const numeroDestino = estado.config.whatsapp.startsWith("55")
+        ? estado.config.whatsapp
+        : "55" + estado.config.whatsapp;
+
+      const msg = [
+        `Olá ${estado.config.nomeBarbearia}, segue o aviso de pagamento via Pix:`,
+        `Cliente: ${nomeCli}`,
+        `Senha: ${senhaTxt}`,
+        `Serviço: ${servTxt}`,
+        `Valor: ${valTxt}`,
+        `Vou enviar o comprovante aqui na conversa.`
+      ].join("\n");
+
+      const url = `https://wa.me/${numeroDestino}?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+      toast("Abrindo WhatsApp para enviar comprovante!");
+    });
+
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        abrirAba(btn.dataset.view);
+      });
+    });
+
+    const local = localStorage.getItem(STORAGE_KEY);
+    if (local) {
+      estado = normalizar(JSON.parse(local));
+    }
+    render();
+
+    refLoja.on("value", (snap) => {
+      const val = snap.val();
+      if (val) {
+        estado = normalizar(val);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(estado));
+        render();
+      } else {
+        refLoja.set(estado).catch(() => {});
+      }
+    });
+  </script>
+</body>
+</html>
